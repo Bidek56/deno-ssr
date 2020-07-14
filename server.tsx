@@ -17,12 +17,11 @@ const browserBundlePath = "/browser.js";
 
 // js for client side React - the React components are stored as client side consts
 const js =
-  `import React from "https://dev.jspm.io/react@16.13.1";
-   import ReactDOM from "https://dev.jspm.io/react-dom@16.13.1";
+  `import React from "https://cdn.pika.dev/react@16.13.1";
+   import ReactDOM from "https://cdn.pika.dev/react-dom@16.13.1/server.js";
 
    const NavBar = ${NavBar}
    ReactDOM.hydrate(React.createElement(App), document.getElementById('react-app'));`;
-
 
 // the js code is loaded from a script tag
 const html =
@@ -33,10 +32,10 @@ const html =
       <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" data-react-helmet="true">
       <link rel="stylesheet" href="/static/style.css" />
       <title>Deneact O.O</title>
-      <script type="module" src="${browserBundlePath}"></script>
     </head>
     <body>
-      <div id="react-app">${(ReactDOMServer as any).renderToString(<NavBar />)}</div>
+      <div id="react-app">${ReactDOMServer.renderToString(<NavBar />)}</div>
+      <script type="module" src="${browserBundlePath}"></script>
     </body>
   </html>`;
 

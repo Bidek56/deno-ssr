@@ -1,6 +1,6 @@
 
 import {
-    Router,
+    React,
   } from "./deps.ts";
 
 import {Paper} from "https://cdn.pika.dev/@material-ui/core@^4.10.2";
