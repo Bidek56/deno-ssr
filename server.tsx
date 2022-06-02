@@ -7,20 +7,20 @@ import {
     ReactDOMServer
   } from "./src/deps.ts";
 
-import NavBar from './src/NavBar.tsx'
+import App from './src/App.tsx'
 
-const server = new Application();
+const app = new Application();
 const router = new Router();
 
 // Adding a route for js code to use i the browser
 const browserBundlePath = "/browser.js";
 
 // js for client side React - the React components are stored as client side consts
-const js =
-  `import React from "https://cdn.pika.dev/react@16.13.1";
-   import ReactDOM from "https://cdn.pika.dev/react-dom@16.13.1/server.js";
+const js = 
+  `import React from "https://cdn.skypack.dev/react@17.0.2";
+   import ReactDOM from "https://cdn.skypack.dev/react-dom@17.0.2/server.js";
 
-   const NavBar = ${NavBar}
+   const NavBar = ${App}
    ReactDOM.hydrate(React.createElement(App), document.getElementById('react-app'));`;
 
 // the js code is loaded from a script tag
@@ -30,11 +30,11 @@ const html =
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" data-react-helmet="true">
-      <link rel="stylesheet" href="/static/style.css" />
+
       <title>Deneact O.O</title>
     </head>
     <body>
-      <div id="react-app">${ReactDOMServer.renderToString(<NavBar />)}</div>
+    <div id="react-app">${ReactDOMServer.renderToString(<App />)}</div>
       <script type="module" src="${browserBundlePath}"></script>
     </body>
   </html>`;
@@ -58,14 +58,15 @@ router.get(browserBundlePath, (ctx) => { //the js code that is loaded from scrip
 })
 .get("/", (ctx) => { //default route
   ctx.response.type = "text/html";
+  // ctx.response.body = "Hello World!";
   ctx.response.body = html;
   // console.log(`Router: ${ctx.request.method} ${ctx.request.url}`);
 })
 
 // Passing Router as middleware
-server.use(router.routes());
-server.use(router.allowedMethods());
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 // start server
 console.log("React SSR App listening on port 8000");
-await server.listen({ port: 8000 });
+await app.listen({ port: 8000 });

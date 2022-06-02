@@ -19,7 +19,6 @@
         "noUnusedParameters": false,
         "preserveConstEnums": false,
         "removeComments": false,
-        "resolveJsonModule": true,
         "strict": false,
         "strictBindCallApply": false,
         "strictFunctionTypes": false,
