@@ -17,8 +17,8 @@ const browserBundlePath = "/browser.js";
 
 // js for client side React - the React components are stored as client side consts
 const js = 
-  `import React from "https://cdn.skypack.dev/react@17.0.2";
-   import ReactDOM from "https://cdn.skypack.dev/react-dom@17.0.2/server.js";
+  `import React from "https://cdn.skypack.dev/react";
+   import ReactDOM from "https://cdn.skypack.dev/react-dom/server";
 
    const NavBar = ${App}
    ReactDOM.hydrate(React.createElement(App), document.getElementById('react-app'));`;
@@ -31,10 +31,10 @@ const html =
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" data-react-helmet="true">
 
-      <title>Deneact O.O</title>
+      <title>Deno SSR</title>
     </head>
     <body>
-    <div id="react-app">${ReactDOMServer.renderToString(<App />)}</div>
+      <div id="react-app">${ReactDOMServer.renderToString(<App />)}</div>
       <script type="module" src="${browserBundlePath}"></script>
     </body>
   </html>`;
@@ -58,7 +58,6 @@ router.get(browserBundlePath, (ctx) => { //the js code that is loaded from scrip
 })
 .get("/", (ctx) => { //default route
   ctx.response.type = "text/html";
-  // ctx.response.body = "Hello World!";
   ctx.response.body = html;
   // console.log(`Router: ${ctx.request.method} ${ctx.request.url}`);
 })
